@@ -33,75 +33,71 @@ extension UIWindow
     }
 }
 
+extension String {
+    subscript(range: Range<Int>) -> String {
+        return substringWithRange(startIndex.advancedBy(range.startIndex)..<startIndex.advancedBy(range.endIndex))
+    }
+}
+
 extension UIColor
 {
-    convenience init(red: Int, green: Int, blue: Int)
-    {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
-    
-    convenience init(netHex: Int)
-    {
-        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    convenience init(netHex:String) {
+        self.init(red: CGFloat( strtoul(netHex[1...2], nil, 16) )/255.0, green: CGFloat( strtoul(netHex[3...4], nil, 16) )/255.0, blue: CGFloat( strtoul(netHex[5...6], nil, 16) )/255.0, alpha: 1 )
     }
     
     class func NFXOrangeColor() -> UIColor
     {
-        return UIColor.init(netHex: 0xec5e28)
+        return UIColor.init(netHex: "#ec5e28")
     }
     
     class func NFXGreenColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x38bb93)
+        return UIColor.init(netHex: "#38bb93")
     }
     
     class func NFXDarkGreenColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x2d7c6e)
+        return UIColor.init(netHex: "#2d7c6e")
     }
     
     class func NFXRedColor() -> UIColor
     {
-        return UIColor.init(netHex: 0xd34a33)
+        return UIColor.init(netHex: "#d34a33")
     }
     
     class func NFXDarkRedColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x643026)
+        return UIColor.init(netHex: "#643026")
     }
     
     class func NFXStarkWhiteColor() -> UIColor
     {
-        return UIColor.init(netHex: 0xccc5b9)
+        return UIColor.init(netHex: "#ccc5b9")
     }
     
     class func NFXDarkStarkWhiteColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x9b958d)
+        return UIColor.init(netHex: "#9b958d")
     }
     
     class func NFXLightGrayColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x9b9b9b)
+        return UIColor.init(netHex: "#9b9b9b")
     }
     
     class func NFXGray44Color() -> UIColor
     {
-        return UIColor.init(netHex: 0x707070)
+        return UIColor.init(netHex: "#707070")
     }
     
     class func NFXGray95Color() -> UIColor
     {
-        return UIColor.init(netHex: 0xf2f2f2)
+        return UIColor.init(netHex: "#f2f2f2")
     }
     
     class func NFXBlackColor() -> UIColor
     {
-        return UIColor.init(netHex: 0x231f20)
+        return UIColor.init(netHex: "#231f20")
     }
 }
 
@@ -141,12 +137,12 @@ extension NSURLRequest
     func getNFXCachePolicy() -> String
     {
         switch cachePolicy {
-            case .UseProtocolCachePolicy: return "UseProtocolCachePolicy"
-            case .ReloadIgnoringLocalCacheData: return "ReloadIgnoringLocalCacheData"
-            case .ReloadIgnoringLocalAndRemoteCacheData: return "ReloadIgnoringLocalAndRemoteCacheData"
-            case .ReturnCacheDataElseLoad: return "ReturnCacheDataElseLoad"
-            case .ReturnCacheDataDontLoad: return "ReturnCacheDataDontLoad"
-            case .ReloadRevalidatingCacheData: return "ReloadRevalidatingCacheData"
+        case .UseProtocolCachePolicy: return "UseProtocolCachePolicy"
+        case .ReloadIgnoringLocalCacheData: return "ReloadIgnoringLocalCacheData"
+        case .ReloadIgnoringLocalAndRemoteCacheData: return "ReloadIgnoringLocalAndRemoteCacheData"
+        case .ReturnCacheDataElseLoad: return "ReturnCacheDataElseLoad"
+        case .ReturnCacheDataDontLoad: return "ReturnCacheDataDontLoad"
+        case .ReloadRevalidatingCacheData: return "ReloadRevalidatingCacheData"
         }
         
     }
@@ -210,7 +206,7 @@ extension NSDate
             return true
         } else {
             return false
-        }        
+        }
     }
 }
 
@@ -234,7 +230,7 @@ public extension UIDevice
         
         return parseDeviceType(identifier)
     }
-
+    
     class func parseDeviceType(identifier: String) -> String {
         
         if identifier == "i386" || identifier == "x86_64" {
@@ -339,7 +335,7 @@ class NFXDebugInfo {
                 completion(result: "-")
             }
             
-        }.resume()
+            }.resume()
     }
     
 }
